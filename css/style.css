@@ -1,25 +1,12 @@
-body {
-    background-image: url('../img/background.jpg');
+header {
+    background-color: #666;
 }
-
-.content {
-    background-color: rgba(255,255,255,0.8);
-}
-
-header, main {
-    background-color: rgba(0,50,100,0.5);
-} 
-
-h2 {
-    font-size: 1.2em;
-    text-transform: uppercase;
-    color: #048;
-    margin-bottom: 1em;
-    font-weight: 700;
+hr {
+    border-bottom: 1px solid black;
 }
 
 h3 {
-    font-size: 1.5em;
+    font-size: 1.6em;
     text-transform: uppercase;
     margin-top: 1em;
     margin-bottom: 1em;
@@ -28,7 +15,17 @@ h3 {
     padding-bottom: 0.3em; 
 }
 
-#ustava h4 {
+#a {
+    padding-top: 3em;
+}
+#b {
+    padding-top: 2em;
+}
+#c {
+    padding-top: 2em;
+}
+
+#divy h4 {
     background-color: #666;
     color: white;
     font-weight: 400;
@@ -36,10 +33,36 @@ h3 {
     font-size: 1.1em;
 }
 
-#ustava h4:hover {
-    background-color: rgb(161, 111, 77);
+#divy h4:hover {
+    background-color: #484848;
 }
 
-#ustava p {
+#divy p {
     display: none;
+}
+
+#nove-divy h4 {
+    background-color: #666;
+    color: white;
+    font-weight: 400;
+    padding: 0.3em;
+    font-size: 1.1em;
+}
+
+#nove-divy h4:hover {
+    background-color: #484848;
+}
+
+#nove-divy p {
+    display: none;
+}
+
+
+#galerie-stare{
+    margin-bottom: 9em;
+
+}
+#galerie-nove{
+    margin-bottom: 9em;
+
 }
