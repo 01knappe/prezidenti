@@ -1,65 +1,79 @@
 $(function(){
-    var d = $('#divy');
-    divy.forEach(function(obj,idx){
-        d.append('<h4>'+obj.name+'</h4><p>Datum: '+obj.date+'</p><p>Civilizace: '+obj.civilization+'</p><p>Zachované: '+obj.preserved+'</p><p>Zánik: '
-        +obj.death+'</p><p>'+obj.text+'</p>');
-    });
-
-    $('#divy h4').click(function(){
+    //document.getElementsByTagName('h1')[0].style.display = 'none';
+    /* Změny zobrazení v sekci ustava */
+    $('#ustava h4').click(function(){
         if ($(this).nextUntil('h4').is(':hidden')) {
-            $(this).css({'background-color':'#f0ad4b'});
+            $(this).css({'background-color':'#048'});
         } else {
-            $(this).css({'background-color':'#484848'});
+            $(this).css({'background-color':'#444'});
         }
         $(this).nextUntil('h4').toggle(1000);
     });
 
-    /* Vykreslení obrázků */
-    var galerieS = $('#galerie-stare div.row');
-    divy.forEach(function(obj,idx){
-        galerieS.append('<div class="col-sm-3"><figure><img src="img/stare/'+obj.photo+'"alt="'+obj.name+'" class="img-fluid"><figcaption>'
+    /* Vykreslení prezidentů */
+    var kviz = $('#kviz div.row');
+    var odkazy = $('#odkazy ul');
+    prezidenti.forEach(function(obj,idx){
+        kviz.append('<div class="col-sm-4"><figure><img src="img/'
+        +obj.photo+'" alt="'+obj.name+'"><figcaption>'
         +obj.name+'</figcaption></figure></div>');
+        /*kviz.append('<div class="col-sm-4"><figure><img src="img/prezident0.jpg" alt="prezident"><figcaption>'
+        +obj.name+'</figcaption></figure></div>');*/
+        odkazy.append('<li><a href="'+ obj.link +'">'+ obj.name +'</a></li>');
     });
 
+    /* Po kliknutí na obrázek se náhodně mění fotky prezidentů */
+    var foto = $('#kviz img');
+    foto.on('click', function(event){
+        var index = Math.floor(Math.random()*prezidenti.length);
+        $(this).attr('src','img/'+prezidenti[index].photo)
+               .attr('alt',prezidenti[index].name);
 
-    var n = $('#nove-divy');
-    nove.forEach(function(obj,idx){
-        n.append('<h4>'+obj.name+'</h4><p>Datum: '+obj.date+'</p><p>Civilizace: '+obj.civilization+'</p><p>Stát: '+obj.state+'</p><p>'+obj.text+'</p>');
-    });
-
-    $('#nove-divy h4').click(function(){
-        if ($(this).nextUntil('h4').is(':hidden')) {
-            $(this).css({'background-color':'#f0ad4b'});
-        } else {
-            $(this).css({'background-color':'#484848'});
+        //Vyvolání modálního okna
+        console.log(event);
+        if(event.altKey) {
+            $('#mojeokno').find('.modal-title').text(prezidenti[index].name);
+            $('#mojeokno').find('#narozeni').text(prezidenti[index].borned);
+            $('#mojeokno').find('#umrti').text(prezidenti[index].died);
+            $('#mojeokno').find('#popis').text(prezidenti[index].description);
+            $('#mojeokno').find('a').attr('href',prezidenti[index].link);
+            $('#mojeokno').find('img').attr('src','img/'+prezidenti[index].photo);
+           // $('#mojeokno').find('').;
+            $('#mojeokno').modal('show');
         }
-        $(this).nextUntil('h4').toggle(1000);
+
+        
     });
 
-    /* Vykreslení obrázků */
-    var galerieN = $('#galerie-nove div.row');
-    nove.forEach(function(obj,idx){
-        galerieN.append('<div class="col-sm-3"><figure><img src="img/nove/'+obj.photo+'"alt="'+obj.name+'" class="img-fluid"><figcaption>'
-        +obj.name+'</figcaption></figure></div>');
+    /* Po kliknutí na tlačítko Ověřit se barevně ohraničí fotky */
+    $('#kviz .btn-success').on('click', function(){
+        $('#kviz figure').each(function(idx,obj) {
+            var alt = $(obj).find('img').attr('alt');
+            var figcaption = $(obj).find('figcaption').text();
+            if (alt == figcaption) {
+                $(obj).find('img').css({'border':'2px solid green'}); 
+            } else {
+                $(obj).find('img').css({'border':'2px solid red'}); 
+            }
+        });
     });
-})
 
-
-var i = 0;
+    var i = 0;
     window.setInterval(function(){
-        $('#zajimavosti div.row img').attr('src','img/'+zajimavosti[i].photo);
-        $('#zajimavosti div.row p').text(zajimavosti[i].text);
-        i<zajimavosti.length-1 ? i++ : i=0; 
-    }, 10000);
+        $('#sidlo img').attr('src','img/'+sidla[i].photo);
+        $('#sidlo figcaption').text(sidla[i].place);
+        i<sidla.length-1 ? i++ : i=0; 
+    }, 3000);
 
+    function zmenaTextu(i){
+        $('#perlicky article h4').text(perlicky[i].title);
+        $('#perlicky article p').text(perlicky[i].text);
+    }
 
-
-var modalStare = $('#odkazyS ul');
-divy.forEach(function(obj,idx){
-    modalStare.append('<li><a href="'+ obj.link +'">'+ obj.name +'</a></li>');
-});
-
-var modalNove = $('#odkazyN ul');
-nove.forEach(function(obj,idx){
-    modalNove.append('<li><a href="'+ obj.link +'">'+ obj.name +'</a></li>');
-});
+    var a = 0;
+    zmenaTextu(a);
+    $('#perlicky button').on('click',function(){
+        a < perlicky.length - 1 ? a++ : a = 0;
+        zmenaTextu(a);
+    })
+})
